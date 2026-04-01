@@ -44,7 +44,7 @@ export default function StatisticsChart() {
       position: "top",
       horizontalAlign: "left",
     },
-    colors: ["#465FFF", "#9CB9FF"], // Define line colors
+    colors: ["#965FFF", "#9CB9FF"], // Define line colors
     chart: {
       fontFamily: "Outfit, sans-serif",
       height: 310,
@@ -138,12 +138,12 @@ export default function StatisticsChart() {
 
   const series = [
     {
-      name: "Sales",
-      data: [180, 190, 170, 160, 175, 165, 170, 205, 230, 210, 240, 235],
+      name: "Akurasi",
+      data: [0.9, 0.85, 0.8, 0.75, 0.8, 0.75, 0.8, 0.85, 0.9, 0.85, 0.9, 0.85],
     },
     {
-      name: "Revenue",
-      data: [40, 30, 50, 40, 55, 40, 70, 100, 110, 120, 150, 140],
+      name: "Loss",
+      data: [0.1, 0.15, 0.2, 0.25, 0.2, 0.3, 0.25, 0.2, 0.15, 0.1, 0.05, 0.1],
     },
   ];
   return (
@@ -151,10 +151,10 @@ export default function StatisticsChart() {
       <div className="flex flex-col gap-5 mb-6 sm:flex-row sm:justify-between">
         <div className="w-full">
           <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">
-            Statistics
+            Grafik Pelatihan
           </h3>
           <p className="mt-1 text-gray-500 text-theme-sm dark:text-gray-400">
-            Target you've set for each month
+            Grafik pelatihan model EfficientNet-B0 yang menunjukkan akurasi dan loss selama proses pelatihan.
           </p>
         </div>
         <div className="flex items-center gap-3 sm:justify-end">
