@@ -3,15 +3,19 @@ import { ApexOptions } from "apexcharts";
 import dynamic from "next/dynamic";
 import { MoreDotIcon } from "@/icons";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
+import TrainingSessionService from "@/service/TrainingSessionService";
 
 // Dynamically import the ReactApexChart component
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
 
-export default function MonthlySalesChart() {
+export default function LabelDistributionChart() {
+  const seriesChart = [];
+  const [distributedLabel, setDistributedLabel] = useState<Array<number>|undefined>(undefined)
+
   const options: ApexOptions = {
     colors: ["#465fff"],
     chart: {
@@ -88,7 +92,7 @@ export default function MonthlySalesChart() {
   const series = [
     {
       name: "Sales",
-      data: [168, 385, 201, 298, 187, 195],
+      data: distributedLabel,
     },
   ];
   const [isOpen, setIsOpen] = useState(false);
@@ -100,6 +104,14 @@ export default function MonthlySalesChart() {
   function closeDropdown() {
     setIsOpen(false);
   }
+
+  useEffect(()=>{
+      TrainingSessionService.getDistributedLabel()
+      .then((distributedLabelData)=>{
+          setDistributedLabel(distributedLabelData.label_count)
+      })
+    
+  },[]);
 
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-5 pt-5 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6 sm:pt-6">
@@ -137,7 +149,14 @@ export default function MonthlySalesChart() {
         <div className="-ml-5 min-w-[650px] xl:min-w-full pl-2">
           <ReactApexChart
             options={options}
-            series={series}
+            series={
+              [
+                {
+                  name: "Sales",
+                  data: distributedLabel ?? [],
+                },
+              ]
+            }
             type="bar"
             height={180}
           />

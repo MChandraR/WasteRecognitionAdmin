@@ -1,13 +1,33 @@
 "use client";
-import React from "react";
 import Badge from "../ui/badge/Badge";
 import { ArrowDownIcon, ArrowUpIcon, BoxIconLine, GroupIcon } from "@/icons";
+import { useState, useEffect } from "react";
+import UserService from "@/service/UserService";
+import TrainingSessionService from "@/service/TrainingSessionService";
+import TotalTrainingCount from "@/models/domain/TotalTrainingCount";
+import { UserStatisticResponse } from "@/models/APIResponse/UserStatisticResponse";
 
-type EcommecereMetricsProps = {
-  userCount : string
-}
 
-export const EcommerceMetrics = ({userCount} : EcommecereMetricsProps) => {
+export const EcommerceMetrics = () => {
+  const [userCount, setUsercount] = useState("0");
+  const [totalTrainingSessionCount, setTotalTrainingSessionCount] = useState<TotalTrainingCount>()
+
+  useEffect(() => {
+    UserService.getUserStatistics({
+      onSuccess: (data : UserStatisticResponse) => {
+        setUsercount(data.total_users.toLocaleString());
+      },
+      onError: (error:string) => {
+        console.error("Failed to fetch user statistics:", error);
+      },
+    });
+
+    TrainingSessionService.getTotalTrainingSessionCount()
+      ?.then( (data) => {
+          setTotalTrainingSessionCount(data)
+      })
+  }, []);
+
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6">
       {/* <!-- Metric Item Start --> */}
@@ -41,17 +61,15 @@ export const EcommerceMetrics = ({userCount} : EcommecereMetricsProps) => {
         <div className="flex items-end justify-between mt-5">
           <div>
             <span className="text-sm text-gray-500 dark:text-gray-400">
-              Orders
+              Training Session
             </span>
-            <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-              5,359
-            </h4>
+            <div className="w-max mt-2 flex justify-between gap-x-6 font-bold text-gray-800 text-2xl bg-amber-700">
+              <a>Pending : {totalTrainingSessionCount?.total_pending}</a>
+              <a>Trained : {totalTrainingSessionCount?.total_trained}</a>
+            </div>
           </div>
 
-          <Badge color="error">
-            <ArrowDownIcon className="text-error-500" />
-            9.05%
-          </Badge>
+      
         </div>
       </div>
       {/* <!-- Metric Item End --> */}

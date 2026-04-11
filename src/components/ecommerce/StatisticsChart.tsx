@@ -1,15 +1,50 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { ApexOptions } from "apexcharts";
 import flatpickr from "flatpickr";
 import ChartTab from "../common/ChartTab";
 import { CalenderIcon } from "../../icons";
+import ModelEvaluationService from "@/service/ModelEvaluationService";
+import ModelEvaluation from "@/models/domain/ModelEvaluation";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 export default function StatisticsChart() {
   const datePickerRef = useRef<HTMLInputElement>(null);
+  const [modelEvaluationData, setModelEvaluationData] = useState<ModelEvaluation>({ accuracy : [], error_rate : [], precision : [], recall : [] , f1_score :[] , confussion_matrix: []})
+
+  useEffect(()=>{
+    ModelEvaluationService.getModelEvaluationData()?.then( (data) => {
+      const modelEvaluationData : ModelEvaluation = { accuracy : [], error_rate : [], precision : [], recall : [] , f1_score :[] , confussion_matrix: []}
+      data?.forEach((modelEvaluation)=>{
+
+          const averageAccurac = modelEvaluation.accuracy.reduce((accumulator, currentValue)=>{
+            return accumulator + currentValue;
+          },0) /6;
+          const averageErrorRate = modelEvaluation.error_rate.reduce((accumulator, currentValue)=>{
+            return accumulator + currentValue;
+          },0) /6;
+          const averagePrecission = modelEvaluation.precision.reduce((accumulator, currentValue)=>{
+            return accumulator + currentValue;
+          },0) /6;
+          const averageRecall = modelEvaluation.recall.reduce((accumulator, currentValue)=>{
+            return accumulator + currentValue;
+          },0) /6;
+          const averageF1Score = modelEvaluation.f1_score.reduce((accumulator, currentValue)=>{
+            return accumulator + currentValue;
+          },0) /6;
+
+          modelEvaluationData.accuracy.push(Number(averageAccurac.toFixed(2)))
+          modelEvaluationData.precision.push(Number(averagePrecission.toFixed(2)))
+          modelEvaluationData.error_rate.push(Number(averageErrorRate.toFixed(2)))
+          modelEvaluationData.recall.push(Number(averageRecall.toFixed(2)))
+          modelEvaluationData.f1_score.push(Number(averageF1Score.toFixed(2)))
+      })
+      setModelEvaluationData(modelEvaluationData)
+      console.log(modelEvaluationData)
+    })
+  },[]);
 
   useEffect(() => {
     if (!datePickerRef.current) return;
@@ -44,7 +79,7 @@ export default function StatisticsChart() {
       position: "top",
       horizontalAlign: "left",
     },
-    colors: ["#965FFF", "#9CB9FF"], // Define line colors
+    colors: ["#00c42e", "#d1001f", "#d1001f", "#d1ae00", "#004bd6"], // Define line colors
     chart: {
       fontFamily: "Outfit, sans-serif",
       height: 310,
@@ -139,11 +174,23 @@ export default function StatisticsChart() {
   const series = [
     {
       name: "Akurasi",
-      data: [0.9, 0.85, 0.8, 0.75, 0.8, 0.75, 0.8, 0.85, 0.9, 0.85, 0.9, 0.85],
+      data: modelEvaluationData?.accuracy,
     },
     {
-      name: "Loss",
-      data: [0.1, 0.15, 0.2, 0.25, 0.2, 0.3, 0.25, 0.2, 0.15, 0.1, 0.05, 0.1],
+      name: "Error Rate",
+      data: modelEvaluationData?.error_rate,
+    },
+    {
+      name: "Precision",
+      data: modelEvaluationData?.precision,
+    },
+    {
+      name: "Recall",
+      data: modelEvaluationData?.recall,
+    },
+    {
+      name: "F1 Score",
+      data: modelEvaluationData?.f1_score,
     },
   ];
   return (

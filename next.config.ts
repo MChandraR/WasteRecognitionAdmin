@@ -2,6 +2,14 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://192.168.1.4:8000/api/:path*',
+      },
+    ];
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
@@ -20,5 +28,6 @@ const nextConfig: NextConfig = {
     },
   
 };
+    
 
 export default nextConfig;
