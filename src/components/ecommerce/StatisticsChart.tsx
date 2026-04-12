@@ -12,28 +12,20 @@ const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 export default function StatisticsChart() {
   const datePickerRef = useRef<HTMLInputElement>(null);
-  const [modelEvaluationData, setModelEvaluationData] = useState<ModelEvaluation>({ accuracy : [], error_rate : [], precision : [], recall : [] , f1_score :[] , confussion_matrix: []})
+  const [modelEvaluationData, setModelEvaluationData] = useState<ModelEvaluation>({ accuracy : [], error_rate : [], precision : [], recall : [] , f1_score :[] , confusion_matrix: []})
+
+  const calculateAverageValue = (arrayData : number[]) => arrayData.reduce( (a, b) =>   a + b ,0) / arrayData.length ;
 
   useEffect(()=>{
     ModelEvaluationService.getModelEvaluationData()?.then( (data) => {
-      const modelEvaluationData : ModelEvaluation = { accuracy : [], error_rate : [], precision : [], recall : [] , f1_score :[] , confussion_matrix: []}
+      const modelEvaluationData : ModelEvaluation = { accuracy : [], error_rate : [], precision : [], recall : [] , f1_score :[] , confusion_matrix: []}
       data?.forEach((modelEvaluation)=>{
 
-          const averageAccurac = modelEvaluation.accuracy.reduce((accumulator, currentValue)=>{
-            return accumulator + currentValue;
-          },0) /6;
-          const averageErrorRate = modelEvaluation.error_rate.reduce((accumulator, currentValue)=>{
-            return accumulator + currentValue;
-          },0) /6;
-          const averagePrecission = modelEvaluation.precision.reduce((accumulator, currentValue)=>{
-            return accumulator + currentValue;
-          },0) /6;
-          const averageRecall = modelEvaluation.recall.reduce((accumulator, currentValue)=>{
-            return accumulator + currentValue;
-          },0) /6;
-          const averageF1Score = modelEvaluation.f1_score.reduce((accumulator, currentValue)=>{
-            return accumulator + currentValue;
-          },0) /6;
+          const averageAccurac = calculateAverageValue(modelEvaluation.accuracy);
+          const averageErrorRate = calculateAverageValue(modelEvaluation.error_rate)
+          const averagePrecission = calculateAverageValue(modelEvaluation.precision)
+          const averageRecall = calculateAverageValue(modelEvaluation.recall)
+          const averageF1Score = calculateAverageValue(modelEvaluation.f1_score)
 
           modelEvaluationData.accuracy.push(Number(averageAccurac.toFixed(2)))
           modelEvaluationData.precision.push(Number(averagePrecission.toFixed(2)))
@@ -79,7 +71,7 @@ export default function StatisticsChart() {
       position: "top",
       horizontalAlign: "left",
     },
-    colors: ["#00c42e", "#d1001f", "#d1001f", "#d1ae00", "#004bd6"], // Define line colors
+    colors: ["#00c42e", "#d1001f", "#0095ff","#d1ae00", "#004bd6"], // Define line colors
     chart: {
       fontFamily: "Outfit, sans-serif",
       height: 310,
@@ -96,7 +88,7 @@ export default function StatisticsChart() {
     fill: {
       type: "gradient",
       gradient: {
-        opacityFrom: 0.55,
+        opacityFrom: 0.2,
         opacityTo: 0,
       },
     },
@@ -132,18 +124,7 @@ export default function StatisticsChart() {
     xaxis: {
       type: "category", // Category-based x-axis
       categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
+        
       ],
       axisBorder: {
         show: false, // Hide x-axis border

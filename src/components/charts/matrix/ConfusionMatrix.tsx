@@ -6,7 +6,6 @@ interface ConfusionMatrixProps {
 }
 
 const ConfusionMatrix = ({ matrixData, labels }: ConfusionMatrixProps) => {
-    console.log(matrixData);
     const data = matrixData.length > 0 && matrixData[0].length > 0 ?  labels.map((label, index) => ({
         id: label,
         data: labels.map((l, i) => ({
@@ -18,28 +17,31 @@ const ConfusionMatrix = ({ matrixData, labels }: ConfusionMatrixProps) => {
     return (
         <div style={{ height: '400px' }}>
         
-        <ResponsiveHeatMap
+       <ResponsiveHeatMap
             data={data}
-            margin={{ top: 60, right: 90, bottom: 60, left: 90 }}
+            margin={{ top: 20, right:100, bottom: 20, left: 20 }} // Left dikecilkan karena sudah kosong
             colors={{
-            type: 'sequential',
-            scheme: 'blues',
+                type: 'sequential',
+                scheme: 'blues',
             }}
             emptyColor="#f7fbff" 
             axisTop={{
-            tickSize: 5,
-            tickPadding: 5,
-            legend: 'Predicted Label',
-            legendPosition: 'middle',
-            legendOffset: -40
+                tickSize: 5,
+                tickPadding: 5,
+                legend: 'Predicted Label',
+                legendPosition: 'middle',
+                legendOffset: -40
+            }}     
+            axisLeft = {null}       
+            axisRight={{
+                tickRotation : 0,
+                tickSize: 5,
+                tickPadding: 5,
+                legend: '',
+                legendPosition: 'middle',
+                legendOffset: 50 
             }}
-            axisLeft={{
-            tickSize: 5,
-            tickPadding: 5,
-            legend: 'Actual Label',
-            legendPosition: 'middle',
-            legendOffset: -70
-            }}
+            
             labelTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
         />
         </div>
