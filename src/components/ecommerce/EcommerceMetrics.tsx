@@ -63,7 +63,7 @@ export const EcommerceMetrics = () => {
             <span className="text-sm text-gray-500 dark:text-gray-400">
               Training Session
             </span>
-            <div className="w-max mt-2 flex justify-between gap-x-6 font-bold text-gray-800 text-2xl bg-amber-700">
+            <div className="w-max mt-2 flex justify-between gap-x-6 font-bold text-gray-800 text-2xl">
               <a>Pending : {totalTrainingSessionCount?.total_pending}</a>
               <a>Trained : {totalTrainingSessionCount?.total_trained}</a>
             </div>

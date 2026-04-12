@@ -103,7 +103,7 @@ export default function ModelStatisticChart() {
 
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-gray-100 dark:border-gray-800 dark:bg-white/[0.03]">
+    <div className="rounded-2xl border border-gray-200 bg-gray-100 dark:border-gray-800 dark:bg-white/3">
       <div className="px-5 pt-5 bg-white shadow-default rounded-2xl pb-11 dark:bg-gray-900 sm:px-6 sm:pt-6">
         <div className="flex justify-between">
           <div>
@@ -195,7 +195,7 @@ export default function ModelStatisticChart() {
         </div>
 
         <div className="w-px bg-gray-200 h-7 dark:bg-gray-800"></div>
-        
+
         <div>
           <p className="mb-1 text-center text-gray-500 text-theme-xs dark:text-gray-400 sm:text-sm">
             Last Update

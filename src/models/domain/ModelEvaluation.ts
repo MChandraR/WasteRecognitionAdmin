@@ -4,5 +4,5 @@ export default interface ModelEvaluation{
     recall : Array<number>,
     precision : Array<number>,
     f1_score : Array<number>,
-    confussion_matrix : Array<number>
+    confusion_matrix : Array<Array<number>>
 }
