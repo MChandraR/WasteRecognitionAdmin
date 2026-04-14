@@ -4,6 +4,8 @@ import { UserStatisticResponse } from "@/models/APIResponse/UserStatisticRespons
 import { ServiceCallback } from "@/models/ServiceCallback";
 import UserData from "@/models/domain/UserData";
 import UserResponse from "@/models/APIResponse/UserResponse";
+import UserRequest from "@/models/APIRequest/UserRequest";
+import axios from "axios";
 
 const UserService = {
     async getUserStatistics(callback : ServiceCallback<UserStatisticResponse>){
@@ -27,7 +29,83 @@ const UserService = {
         }catch{
             return
         }
+    },
+
+    async createNewuser(userData : UserRequest):Promise<APIResponse<null>>{
+        try{
+            const response = await APIService.post<APIResponse<null>>("/auth/register", userData)
+            const data = response.data;
+            return data
+        }catch (exception) {
+            if (axios.isAxiosError(exception)) {
+                const serverStatus = exception.response?.status;
+                const serverMessage = exception.response?.data?.message;
+
+                return {
+                    status: serverStatus || 500,
+                    message: serverMessage || "Terjadi kesalahan pada server",
+                    data: null
+                };
+            }
+
+        return {
+            status: 500,
+            message: "Internal Client Error",
+            data: null
+        };
     }
+    },
+
+    async updateUserData(userData : UserRequest):Promise<APIResponse<null>>{
+        try{
+            const response = await APIService.put<APIResponse<null>>("/users", userData)
+            const data = response.data;
+            return data
+        }catch (exception) {
+            if (axios.isAxiosError(exception)) {
+                const serverStatus = exception.response?.status;
+                const serverMessage = exception.response?.data?.message;
+
+                return {
+                    status: serverStatus || 500,
+                    message: serverMessage || "Terjadi kesalahan pada server",
+                    data: null
+                };
+            }
+
+        return {
+            status: 500,
+            message: "Internal Client Error",
+            data: null
+        };
+    }
+    },
+
+    async deleteUserData(id : string): Promise<APIResponse<null>>{
+        try{
+            const response = await APIService.delete<APIResponse<null>>("/users?id="+id)
+            const data = response.data;
+            return data
+        }catch (exception) {
+            if (axios.isAxiosError(exception)) {
+                const serverStatus = exception.response?.status;
+                const serverMessage = exception.response?.data?.message;
+
+                return {
+                    status: serverStatus || 500,
+                    message: serverMessage || "Terjadi kesalahan pada server",
+                    data: null
+                };
+            }
+
+            return {
+                status: 500,
+                message: "Internal Client Error",
+                data: null
+            };
+        }
+    }
+ 
 }
 
 export default UserService;

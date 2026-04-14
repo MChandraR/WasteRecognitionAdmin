@@ -4,7 +4,7 @@ import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import StatisticsChart from "@/components/ecommerce/StatisticsChart";
 import ModelEvaluation from "@/models/domain/ModelEvaluation";
 import ModelEvaluationService from "@/service/ModelEvaluationService";
-import { Divider, SegmentedControl, Table, Title } from "@mantine/core";
+import { Divider, SegmentedControl, Table, Title, Pagination } from "@mantine/core";
 import { ApexOptions } from "apexcharts";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
@@ -126,14 +126,14 @@ export default function ModelEvaluationPage() {
 
 
             <div className="w-full mt-5 flex rounded-2xl mb-10 border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 md:p-6">
-                <div className="w-1/2   ">
+                <div className="w-2/5   ">
                     <Title order={2} className="pb-5">Confusion Matrix</Title>
 
-                    <div className="">
+                    <div className="mb-5">
                         <ConfusionMatrix matrixData={selectedConfusionMatrix} labels={labels}/>
                     </div>
 
-                    <Title order={2} className="pb-5">Statistik</Title>
+                    <Title order={2} className="pb-5 ">Statistik</Title>
                     <SegmentedControl
                         value={value}
                         onChange={(value)=>{
@@ -169,7 +169,7 @@ export default function ModelEvaluationPage() {
                     </div>
                 </div>
                 <Divider orientation="vertical"></Divider>
-                <div className="w-1/2 ml-10">
+                <div className="w-3/5 ml-10">
                     <Title order={2} className="pb-2">Evaluation Data ( Based on Round) </Title>
                     <Divider className="pb-5"></Divider>
                     <Table highlightOnHover>

@@ -4,6 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
+import { FaUserFriends } from "react-icons/fa";
+import { RxDashboard } from "react-icons/rx";
+import { VscGraphLine } from "react-icons/vsc";
+
 import {
   BoxCubeIcon,
   CalenderIcon,
@@ -33,12 +37,12 @@ const navItems: NavItem[] = [
     path : "/",
   },
   {
-    icon: <CalenderIcon />,
+    icon: <FaUserFriends width={50} height={50} className="w-6"/>,
     name: "Users",
     path: "/users",
   },
   {
-    icon: <CalenderIcon />,
+    icon: <VscGraphLine  width={50} height={50} className="w-6 font-bold"/>,
     name: "Model Evaluation",
     path: "/evaluation",
   },
