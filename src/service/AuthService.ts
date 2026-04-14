@@ -1,6 +1,6 @@
 import APIService from "./APIService";
 import {AuthResponse} from "../models/APIResponse/AuthResponse";
-import {APIResponse} from "../models/APIResponse/APIResponse";
+import APIResponse from "../models/APIResponse/APIResponse";
 import { AuthRequest } from "@/models/APIRequest/AuthRequest";
 import { useAuth } from "@/context/AuthContext";
 import { ServiceCallback } from "@/models/ServiceCallback";

@@ -1,8 +1,6 @@
 'use client';
 import React, {createContext, useContext, useState, useEffect} from "react";
-import Cookies from "js-cookie";
 import { getAuthToken, setAuthToken, removeAuthToken } from "@/util/AuthCookies";
-import { get } from "http";
 
 interface AuthContextType {
     isAuthenticated: boolean;
