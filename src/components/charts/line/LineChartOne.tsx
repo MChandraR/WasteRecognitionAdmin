@@ -4,12 +4,21 @@ import React from "react";
 import { ApexOptions } from "apexcharts";
 
 import dynamic from "next/dynamic";
+import { SeriesType } from "../interface/SeriesType";
 // Dynamically import the ReactApexChart component
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
 
-export default function LineChartOne() {
+
+interface LineChartOneProps{
+  data : SeriesType[]
+}
+
+
+const LineChartOne: React.FC<LineChartOneProps> = ({
+  data
+})=>{
   const options: ApexOptions = {
     legend: {
       show: false, // Hide legend
@@ -18,6 +27,9 @@ export default function LineChartOne() {
     },
     colors: ["#465FFF", "#9CB9FF"], // Define line colors
     chart: {
+      animations : {
+        enabled : data.length > 0 ? data[0].data.length < 200 : false
+      },
       fontFamily: "Outfit, sans-serif",
       height: 310,
       type: "line", // Set the chart type to 'line'
@@ -29,7 +41,6 @@ export default function LineChartOne() {
       curve: "straight", // Define the line style (straight, smooth, or step)
       width: [2, 2], // Line width for each dataset
     },
-
     fill: {
       type: "gradient",
       gradient: {
@@ -67,63 +78,42 @@ export default function LineChartOne() {
       },
     },
     xaxis: {
-      type: "category", // Category-based x-axis
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
-      axisBorder: {
-        show: false, // Hide x-axis border
-      },
-      axisTicks: {
-        show: false, // Hide x-axis ticks
-      },
-      tooltip: {
-        enabled: false, // Disable tooltip for x-axis points
-      },
+      type: "category",
+      // Membatasi jumlah label yang muncul agar tidak menumpuk
+      // Jika data 100, tickAmount 10 akan memunculkan label setiap 10 data
+      tickAmount: Math.ceil( (data.length>0 ? data[0].data.length : 0) / 10), 
+      axisBorder: { show: false },
+      axisTicks: { show: false },
+      tooltip: { enabled: false },
     },
     yaxis: {
       labels: {
         style: {
-          fontSize: "12px", // Adjust font size for y-axis labels
-          colors: ["#6B7280"], // Color of the labels
+          fontSize: "12px",
+          colors: ["#6B7280"],
+        },
+        // Formatter untuk membatasi panjang karakter
+        formatter: (value) => {
+          const valString = String(value);
+          if (valString.length > 5) {
+            return valString.substring(0, 5) + "...";
+          }
+          return valString;
         },
       },
       title: {
-        text: "", // Remove y-axis title
-        style: {
-          fontSize: "0px",
-        },
+        style: { fontSize: "0px" },
       },
     },
+    
   };
 
-  const series = [
-    {
-      name: "Sales",
-      data: [180, 190, 170, 160, 175, 165, 170, 205, 230, 210, 240, 235],
-    },
-    {
-      name: "Revenue",
-      data: [40, 30, 50, 40, 55, 40, 70, 100, 110, 120, 150, 140],
-    },
-  ];
   return (
-    <div className="max-w-full overflow-x-auto custom-scrollbar">
-      <div id="chartEight" className="min-w-[1000px]">
+    <div className="max-w-full  overflow-x-auto custom-scrollbar">
+      <div id="chartEight" className="max-w-full">
         <ReactApexChart
           options={options}
-          series={series}
+          series={data}
           type="area"
           height={310}
         />
@@ -131,3 +121,5 @@ export default function LineChartOne() {
     </div>
   );
 }
+
+export default LineChartOne;

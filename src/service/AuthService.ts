@@ -9,7 +9,7 @@ const AuthService = {
 
     async signIn(authRequest: AuthRequest, callback: ServiceCallback<AuthResponse>): Promise<APIResponse<AuthResponse>> {
         const response = await APIService.post<APIResponse<AuthResponse>>("/login", authRequest);
-        if(response.data.status == 200) {
+        if(response.data.status == 200 && response.data.data) {
             callback.onSuccess(response.data.data);
         } else {
             callback.onError(response.data.message);

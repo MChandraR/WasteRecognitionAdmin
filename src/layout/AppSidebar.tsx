@@ -7,6 +7,7 @@ import { useSidebar } from "../context/SidebarContext";
 import { FaUserFriends } from "react-icons/fa";
 import { VscGraphLine } from "react-icons/vsc";
 import { BiNetworkChart } from "react-icons/bi";
+import { LiaNetworkWiredSolid } from "react-icons/lia";
 
 import {
   BoxCubeIcon,
@@ -45,6 +46,11 @@ const navItems: NavItem[] = [
     icon: <BiNetworkChart width={50} height={50} className="w-6"/>,
     name: "Training",
     path: "/training",
+  },
+  {
+    icon: <LiaNetworkWiredSolid width={50} height={50} className="w-6 p-0"/>,
+    name: "Averaging",
+    path: "/averaging",
   },
   {
     icon: <VscGraphLine  width={50} height={50} className="w-6 font-bold"/>,
