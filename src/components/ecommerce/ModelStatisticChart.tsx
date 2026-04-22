@@ -16,7 +16,7 @@ const ReactApexChart = dynamic(() => import("react-apexcharts"), {
 
 export default function ModelStatisticChart() {
   const getDateTime = ()=>{
-    const date =  new Date( (globalModelInfo?.last_updated ?? 0) * 1000)
+    const date =  new Date( (globalModelInfo?.last_updated ?? 1776439776) * 1000)
     return date.toLocaleString('id-ID', {
       year: 'numeric',
       month: 'long', // 'long' untuk nama bulan, '2-digit' untuk angka
@@ -25,7 +25,7 @@ export default function ModelStatisticChart() {
       minute: '2-digit',
       second: '2-digit',
       hour12: false // Pakai format 24 jam
-    }); 
+    }).replace("pukul", " "); 
   }
   const [globalModelInfo, setGlobalModelInfo] = useState<GlobalModelInfo>();
   const [seriesChart, setSeriesChart] = useState<[number]>([Number( ( (globalModelInfo?.accuracy ?? 0 ) * 100.0 ).toFixed(2) )])

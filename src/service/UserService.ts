@@ -8,9 +8,9 @@ import UserRequest from "@/models/APIRequest/UserRequest";
 import axios from "axios";
 
 const UserService = {
-    async getUserStatistics(callback : ServiceCallback<UserStatisticResponse>){
+    async getUserStatistics(status : string = "",callback : ServiceCallback<UserStatisticResponse>){
         try{
-            let response = await APIService.get<APIResponse<UserStatisticResponse>>("/users/count");
+            let response = await APIService.get<APIResponse<UserStatisticResponse>>("/users/count" + (status? "?is_assigned="+status : ""));
             if(response.data && response.data.data){
                 callback.onSuccess(response.data.data);
             }else{

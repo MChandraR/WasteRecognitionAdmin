@@ -13,7 +13,7 @@ export const EcommerceMetrics = () => {
   const [totalTrainingSessionCount, setTotalTrainingSessionCount] = useState<TotalTrainingCount>()
 
   useEffect(() => {
-    UserService.getUserStatistics({
+    UserService.getUserStatistics("",{
       onSuccess: (data : UserStatisticResponse) => {
         setUsercount(data.total_users.toLocaleString());
       },

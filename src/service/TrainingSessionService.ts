@@ -52,6 +52,27 @@ const TrainingSessionService = {
                 });
             });
         }
+    },
+
+    async getAlPendinglTrainingData() : Promise<APIResponse<TrainingModel[]>>{
+        try{
+            const response = await APIService.get<APIResponse<TrainingSessionResponse[]>>("/training/ready");
+            return {
+                status : response.status,
+                message : response.data.message,
+                data : response.data.data
+            }
+        }catch(exception){
+            return new Promise((resolve) => {
+                HandleAxiosException(exception, (result) => {
+                    resolve({
+                        status: result.status,
+                        message: result.message,
+                        data: undefined
+                    });
+                });
+            });
+        }
     }
 }
 

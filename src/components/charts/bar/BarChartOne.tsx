@@ -87,7 +87,7 @@ export interface BarChartOneProps{
 
   return (
     <div className="max-w-full overflow-x-auto custom-scrollbar">
-      <div id="chartOne" className="max-w-full">
+      <div id="chartOne" className="max-w-full  ">
         <ReactApexChart
           options={options}
           series={[{

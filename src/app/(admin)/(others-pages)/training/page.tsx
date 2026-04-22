@@ -79,7 +79,7 @@ export default function TrainingPage(){
                     <Table.Thead>
                         <Table.Tr>
                             <Table.Th >No.</Table.Th>
-                            <Table.Th >Rata-rate Loss</Table.Th>
+                            <Table.Th >Loss</Table.Th>
                             <Table.Th >Jumlah Data</Table.Th>
                             <Table.Th >Status</Table.Th>
                             <Table.Th >Created At</Table.Th>
@@ -99,7 +99,7 @@ export default function TrainingPage(){
                                 style={{ cursor: 'pointer' }}
                             >
                                 <Table.Td >{index + 1}</Table.Td>
-                                <Table.Td >{item.average_loss}</Table.Td>
+                                <Table.Td >{item.last_loss}</Table.Td>
                                 <Table.Td >{item.num_data}</Table.Td>
                                 <Table.Td >{item.status}</Table.Td>
                                 <Table.Td >{item.created_at.slice(0,19)}</Table.Td>
@@ -109,7 +109,7 @@ export default function TrainingPage(){
                         )}
                     </Table.Tbody>
                 </Table>
-                <TablePagination totalData={trainingSessionData.length} totalPages={trainingSessionData.length/numOfDataPerPage} currentPage={currentPaginationIndex} onPageChange={(number)=>setCurrentPaginationIndex(number)}/>
+                <TablePagination totalData={trainingSessionData.length} totalPages={Math.ceil(trainingSessionData.length/numOfDataPerPage)} currentPage={currentPaginationIndex} onPageChange={(number)=>setCurrentPaginationIndex(number)}/>
                 </div>
             </div>
         </div>
