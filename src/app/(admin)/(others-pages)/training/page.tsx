@@ -102,7 +102,7 @@ export default function TrainingPage(){
                                 <Table.Td >{item.last_loss}</Table.Td>
                                 <Table.Td >{item.num_data}</Table.Td>
                                 <Table.Td >{item.status}</Table.Td>
-                                <Table.Td >{item.created_at.slice(0,19)}</Table.Td>
+                                <Table.Td >{item.created_at}</Table.Td>
                             </Table.Tr>
                             )
                         }

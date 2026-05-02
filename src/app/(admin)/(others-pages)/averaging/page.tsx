@@ -74,7 +74,7 @@ export default function AveraginPage(){
                                         <TableTd>{data.session_id}</TableTd>
                                         <TableTd></TableTd>
                                         <TableTd></TableTd>
-                                        <TableTd>{data.created_at.slice(0,19)}</TableTd>
+                                        <TableTd>{data.created_at}</TableTd>
                                     </TableTr>
                                 )
                             })

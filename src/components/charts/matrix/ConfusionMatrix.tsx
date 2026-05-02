@@ -42,7 +42,16 @@ const ConfusionMatrix = ({ matrixData, labels }: ConfusionMatrixProps) => {
                 legendOffset: 50 
             }}
             
-            labelTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
+            labelTextColor={(cell) => {
+                let rgb = cell.color.replace('rgb', '').replace(')', '').replace('(', '').split(',')  
+                let grayscale = 0.299 * parseInt(rgb[0]) + 0.587 * parseInt(rgb[1]) + 0.114 * parseInt(rgb[2]);
+                console.log(grayscale , cell.value)
+
+                if (cell.value != null && grayscale <= 120) {
+                    return '#ffffff'
+                }
+                return '#000000'
+            }}
         />
         </div>
     )

@@ -91,7 +91,14 @@ export default function LabelDistributionChart() {
   };
   const series = [
     {
-      name: "Sales",
+      name: [
+        "Plastik",
+        "Kertas",
+        "Kaca",
+        "Logam",
+        "Kardus",
+        "Trash"
+      ],
       data: distributedLabel,
     },
   ];
@@ -152,7 +159,7 @@ export default function LabelDistributionChart() {
             series={
               [
                 {
-                  name: "Sales",
+                  name: "Jumlah label",
                   data: distributedLabel ?? [],
                 },
               ]

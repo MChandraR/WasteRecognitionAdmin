@@ -4,7 +4,7 @@ import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import StatisticsChart from "@/components/ecommerce/StatisticsChart";
 import ModelEvaluation from "@/models/domain/ModelEvaluation";
 import ModelEvaluationService from "@/service/ModelEvaluationService";
-import { Divider, SegmentedControl, Table, Title, TextInput } from "@mantine/core";
+import { Divider, SegmentedControl, Table, Title, TextInput , Text} from "@mantine/core";
 import options from "../../../../components/charts/options/EvaluationChartOption";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
@@ -26,7 +26,7 @@ export default function ModelEvaluationPage() {
     const [distributedLabel, setDistributedLabel] = useState<Array<number>>()
     const [searchKey, setSearchKey] = useState<string>("");
     const [currentPaginationIndex, setCurrentPaginationIndex] = useState<number>(1);
-    const numOfDataPerPage = 5;
+    const numOfDataPerPage = 15;
 
     
 
@@ -81,6 +81,8 @@ export default function ModelEvaluationPage() {
                             { label: 'F1 Score', value: 'f1_score' },
                         ]}
                         />
+                    <Title order={5} className="pt-4 pl-2 font-normal"> *semakin {value === 'accuracy' || value === 'precision' || value === 'recall' || value === 'f1_score' ? 'tinggi' : 'rendah'} lebih baik</Title>
+
 
                     <div className="max-w-full overflow-x-auto custom-scrollbar">
                         <div className="-ml-5 min-w-[650px] xl:min-w-full pl-2">
