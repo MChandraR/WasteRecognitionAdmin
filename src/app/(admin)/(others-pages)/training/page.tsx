@@ -49,8 +49,8 @@ export default function TrainingPage(){
         <div className="">
             <div className="w-full mt-5 flex rounded-2xl mb-10 border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 md:p-6 gap-5 justify-between items-center">
                 <div className="">
-                    <Title order={3}>Current Training</Title>
-                    <Text>Anda sudah bisa melakukan agregasi model </Text>
+                    <Title order={3} className="text-gray-800 dark:text-white/90">Current Training</Title>
+                    <Text className="text-gray-800 dark:text-white/50">Anda sudah bisa melakukan agregasi model </Text>
                 </div>
                 <Button>Training</Button>
             </div>
@@ -58,31 +58,42 @@ export default function TrainingPage(){
             <div className="grid grid-cols-[40%_auto] gap-10">
                 <div className="w-full mt-5 rounded-2xl mb-10 border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 md:p-6">
                     <div className="grid grid-cols-1 gap-5">
-                        <Title order={3}>Distribusi Label</Title>
+                        <Title order={3} className="text-gray-800 dark:text-white/90">Distribusi Label</Title>
                         <BarChartOne x_label={xLabel} data={trainingSessionData[selectedIndex] ? trainingSessionData[selectedIndex].label_count : []}/>
 
-                        <Title order={3}>Loss Grafik</Title>
+                        <Title order={3} className="text-gray-800 dark:text-white/90">Loss Grafik</Title>
                         <LineChartOne data={chartData}></LineChartOne>
                     </div>
                 </div>
                 <div>
                     <div className="flex justify-end items-center w-full gap-3 mb-5 mt-3"> 
-                        <Title order={5}>Search : </Title>
+                        <Title className="text-gray-800 dark:text-white/90" order={5}>Search : </Title>
                         <TextInput
-                        className="w-full sm:w-1/2 lg:w-1/3"
+                        className="w-full sm:w-1/2 lg:w-1/3 bg-gray-100 dark:bg-gray-800 "
                         value={String(searchKey)}
                         onChange={(event) => setSearchKey(event.currentTarget.value)}
                         placeholder="Masukkan kata kunci pencarian"
                         />
                     </div>
-                <Table highlightOnHover>
+                <Table highlightOnHover highlightOnHoverColor="bg-white p-5 dark:border-gray-800 "
+                    styles={{
+                        th: {
+                        // Warna garis header
+                        borderBottomColor: '#e03131',
+                        },
+                        td: {
+                        // Warna garis antar baris dan kolom
+                        borderColor: '#e03131',
+                        },
+                    }}
+                    >
                     <Table.Thead>
                         <Table.Tr>
-                            <Table.Th >No.</Table.Th>
-                            <Table.Th >Loss</Table.Th>
-                            <Table.Th >Jumlah Data</Table.Th>
-                            <Table.Th >Status</Table.Th>
-                            <Table.Th >Created At</Table.Th>
+                            <Table.Th className="text-gray-800 dark:text-white/90 text-lg">No.</Table.Th>
+                            <Table.Th className="text-gray-800 dark:text-white/90 text-lg">Loss</Table.Th>
+                            <Table.Th className="text-gray-800 dark:text-white/90 text-lg">Jumlah Data</Table.Th>
+                            <Table.Th className="text-gray-800 dark:text-white/90 text-lg">Status</Table.Th>
+                            <Table.Th className="text-gray-800 dark:text-white/90 text-lg">Created At</Table.Th>
                         </Table.Tr>
                     </Table.Thead>
                     <Table.Tbody>
@@ -95,14 +106,14 @@ export default function TrainingPage(){
                                     setSelectedIndex(index)
                                     setChartDataByIndex(index)
                                 }}
-                                bg={selectedIndex === index ? 'blue.1' : undefined} // Cara Mantine
+                                className={selectedIndex === index ? 'bg-blue-00 dark:bg-blue-900' : undefined} // Cara Mantine
                                 style={{ cursor: 'pointer' }}
                             >
-                                <Table.Td >{index + 1}</Table.Td>
-                                <Table.Td >{item.last_loss}</Table.Td>
-                                <Table.Td >{item.num_data}</Table.Td>
-                                <Table.Td >{item.status}</Table.Td>
-                                <Table.Td >{item.created_at}</Table.Td>
+                                <Table.Td className="text-gray-800 dark:text-white/90 text-lg ">{index + 1}</Table.Td>
+                                <Table.Td className="text-gray-800 dark:text-white/90 text-lg ">{item.last_loss}</Table.Td>
+                                <Table.Td className="text-gray-800 dark:text-white/90 text-lg ">{item.num_data}</Table.Td>
+                                <Table.Td className="text-gray-800 dark:text-white/90 text-lg ">{item.status}</Table.Td>
+                                <Table.Td className="text-gray-800 dark:text-white/90 text-lg ">{item.created_at}</Table.Td>
                             </Table.Tr>
                             )
                         }

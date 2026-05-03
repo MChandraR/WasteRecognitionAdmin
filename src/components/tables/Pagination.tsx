@@ -21,7 +21,7 @@ const TablePagination: React.FC<PaginationProps> = ({
   return (
      <div className="flex justify-between mt-5" >
       <div> 
-        <Text>Total Data : {totalData}</Text>
+        <Text className="text-gray-800 dark:text-white/90">Total Data : {totalData}</Text>
       </div>
       <Pagination value={currentPage} onChange={(index: number) => onPageChange(index)} total={totalPages} color="indigo" />
     </div>
