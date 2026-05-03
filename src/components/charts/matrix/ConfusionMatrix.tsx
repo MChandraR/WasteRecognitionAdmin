@@ -47,10 +47,10 @@ const ConfusionMatrix = ({ matrixData, labels }: ConfusionMatrixProps) => {
                 let grayscale = 0.299 * parseInt(rgb[0]) + 0.587 * parseInt(rgb[1]) + 0.114 * parseInt(rgb[2]);
                 console.log(grayscale , cell.value)
 
-                if (cell.value != null && grayscale <= 120) {
-                    return '#ffffff'
+                if (cell.value != null && grayscale <= 150) {
+                    return '#e3e5e8'
                 }
-                return '#000000'
+                return '#616161'
             }}
         />
         </div>
