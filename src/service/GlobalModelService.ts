@@ -9,13 +9,18 @@ const GlobalModelService = {
     try {
       const response = await APIService.get<APIResponse<GlobalModelInfo>>("/model/info");
       const rawData = response.data.data;
+      if (!rawData) {
+        throw new Error("No data received from API");
+      }
 
       const formattedData: GlobalModelInfo = {
         id: rawData.id,
         model_name: rawData.model_name,
         model_version: rawData.model_version,
         last_updated: rawData.last_updated,
-        accuracy : rawData.accuracy
+        accuracy : rawData.accuracy,
+        f1_score : rawData.f1_score,
+        error_rate : rawData.error_rate
       };
 
       if (onSuccess) {

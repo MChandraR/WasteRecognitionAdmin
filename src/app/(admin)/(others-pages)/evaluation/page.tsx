@@ -57,58 +57,62 @@ export default function ModelEvaluationPage() {
             <StatisticsChart/>
 
 
-            <div className="w-full mt-5 flex rounded-2xl mb-10 border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 md:p-6">
-                <div className="w-2/5   ">
-                    <Title order={2} className="pb-5">Confusion Matrix</Title>
+            <div className="w-full mt-5  rounded-2xl mb-10 border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 md:p-6">
+                <div className="w-full flex">
+                    <div className="w-1/2 pr-10">
+                        <Title order={2} className="pb-5 text-gray-800 dark:text-white/90">Confusion Matrix</Title>
 
-                    <div className="mb-5">
-                        <ConfusionMatrix matrixData={selectedConfusionMatrix} labels={labels}/>
+                        <div className="mb-5">
+                            <ConfusionMatrix matrixData={selectedConfusionMatrix} labels={labels}/>
+                        </div>
                     </div>
 
-                    <Title order={2} className="pb-5 ">Statistik</Title>
-                    <SegmentedControl
-                        value={value}
-                        onChange={(value)=>{
-                            setDistributedLabel(evalData[selectedId ?? 0][value as Metric1D])
-                            console.log(value)
-                            setValue(value)
-                        }}
-                        data={[
-                            { label: 'Akurasi', value: 'accuracy' },
-                            { label: 'Error Rate', value: 'error_rate' },
-                            { label: 'Precision', value: 'precision' },
-                            { label: 'Recall', value: 'recall' },
-                            { label: 'F1 Score', value: 'f1_score' },
-                        ]}
-                        />
-                    <Title order={5} className="pt-4 pl-2 font-normal"> *semakin {value === 'accuracy' || value === 'precision' || value === 'recall' || value === 'f1_score' ? 'tinggi' : 'rendah'} lebih baik</Title>
+                    <div className="w-1/2 border-l border-gray-200 dark:border-gray-800 pl-10">
+
+                        <Title order={2} className="pb-5 text-gray-800 dark:text-white/90 ">Statistik</Title>
+                        <SegmentedControl
+                            value={value}
+                            onChange={(value)=>{
+                                setDistributedLabel(evalData[selectedId ?? 0][value as Metric1D])
+                                console.log(value)
+                                setValue(value)
+                            }}
+                            data={[
+                                { label: 'Akurasi', value: 'accuracy' },
+                                { label: 'Error Rate', value: 'error_rate' },
+                                { label: 'Precision', value: 'precision' },
+                                { label: 'Recall', value: 'recall' },
+                                { label: 'F1 Score', value: 'f1_score' },
+                            ]}
+                            />
+                        <Title order={5} className="pt-4 pl-2 font-normal text-gray-800 dark:text-white/90"> *semakin {value === 'accuracy' || value === 'precision' || value === 'recall' || value === 'f1_score' ? 'tinggi' : 'rendah'} lebih baik</Title>
 
 
-                    <div className="max-w-full overflow-x-auto custom-scrollbar">
-                        <div className="-ml-5 min-w-[650px] xl:min-w-full pl-2">
-                        <ReactApexChart
-                            options={options}
-                            series={
-                            [
-                                {
-                                name: "Sales",
-                                data: distributedLabel ?? [],
-                                },
-                            ]
-                            }
-                            type="bar"
-                            height={180}
-                        />
+                        <div className="max-w-full overflow-x-auto custom-scrollbar">
+                            <div className="-ml-5 min-w-[650px] xl:min-w-full pl-2 pt-10">
+                            <ReactApexChart
+                                options={options}
+                                series={
+                                [
+                                    {
+                                    name: "Sales",
+                                    data: distributedLabel ?? [],
+                                    },
+                                ]
+                                }
+                                type="bar"
+                                height={350}
+                            />
+                            </div>
                         </div>
                     </div>
                 </div>
-                <Divider orientation="vertical"></Divider>
-                <div className="w-3/5 ml-10">
-                    <Title order={3} className="pb-2">Evaluation Data ( Based on Round) </Title>
+                <div className="mt-10">
+                    <Title order={3} className="pb-2 text-gray-800 dark:text-white/90">Evaluation Data ( Based on Round) </Title>
                     <Divider className="pb-5"></Divider>
 
                     <div className="flex justify-end items-center w-full gap-3 mb-5 mt-3"> 
-                      <Title order={5}>Search : </Title>
+                      <Title className="text-gray-800 dark:text-white/90" order={5}>Search : </Title>
                       <TextInput
                         className="w-full sm:w-1/2 lg:w-1/3"
                         value={String(searchKey)}
@@ -120,12 +124,12 @@ export default function ModelEvaluationPage() {
                     <Table highlightOnHover>
                         <Table.Thead>
                             <Table.Tr>
-                                <Table.Th className="text-lg">No.</Table.Th>
-                                <Table.Th className="text-lg">Accuracy</Table.Th>
-                                <Table.Th className="text-lg">Error Rate</Table.Th>
-                                <Table.Th className="text-lg">Precision</Table.Th>
-                                <Table.Th className="text-lg">Recall</Table.Th>
-                                <Table.Th className="text-lg">F1 Score</Table.Th>
+                                <Table.Th className="text-lg text-gray-800 dark:text-white/90">No.</Table.Th>
+                                <Table.Th className="text-lg text-gray-800 dark:text-white/90">Accuracy</Table.Th>
+                                <Table.Th className="text-lg text-gray-800 dark:text-white/90">Error Rate</Table.Th>
+                                <Table.Th className="text-lg text-gray-800 dark:text-white/90">Precision</Table.Th>
+                                <Table.Th className="text-lg text-gray-800 dark:text-white/90">Recall</Table.Th>
+                                <Table.Th className="text-lg text-gray-800 dark:text-white/90">F1 Score</Table.Th>
                             </Table.Tr>
                         </Table.Thead>
                         <Table.Tbody>
@@ -142,12 +146,12 @@ export default function ModelEvaluationPage() {
                                     bg={selectedId === index ? 'blue.1' : undefined} // Cara Mantine
                                     style={{ cursor: 'pointer' }}
                                 >
-                                    <Table.Td className="text-lg">{index + 1}</Table.Td>
-                                    <Table.Td className="text-lg">{getAvg(item.accuracy).toFixed(4)}</Table.Td>
-                                    <Table.Td className="text-lg">{getAvg(item.error_rate).toFixed(4)}</Table.Td>
-                                    <Table.Td className="text-lg">{getAvg(item.precision).toFixed(4)}</Table.Td>
-                                    <Table.Td className="text-lg">{getAvg(item.recall).toFixed(4)}</Table.Td>
-                                    <Table.Td className="text-lg">{getAvg(item.f1_score).toFixed(4)}</Table.Td>
+                                    <Table.Td className="text-lg text-gray-800 dark:text-white/90">{index + 1}</Table.Td>
+                                    <Table.Td className="text-lg text-gray-800 dark:text-white/90">{getAvg(item.accuracy).toFixed(4)}</Table.Td>
+                                    <Table.Td className="text-lg text-gray-800 dark:text-white/90">{getAvg(item.error_rate).toFixed(4)}</Table.Td>
+                                    <Table.Td className="text-lg text-gray-800 dark:text-white/90">{getAvg(item.precision).toFixed(4)}</Table.Td>
+                                    <Table.Td className="text-lg text-gray-800 dark:text-white/90">{getAvg(item.recall).toFixed(4)}</Table.Td>
+                                    <Table.Td className="text-lg text-gray-800 dark:text-white/90">{getAvg(item.f1_score).toFixed(4)}</Table.Td>
                                 </Table.Tr>
                               )
                             }

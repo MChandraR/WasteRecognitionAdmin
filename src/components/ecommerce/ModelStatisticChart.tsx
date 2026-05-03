@@ -88,7 +88,6 @@ export default function ModelStatisticChart() {
     setIsOpen(false);
   }
 
-
   useEffect(() => {
     GlobalModelService.getGlobalModelInfo()
       .then((response) => {
@@ -103,7 +102,7 @@ export default function ModelStatisticChart() {
 
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-gray-100 dark:border-gray-800 dark:bg-white/3">
+    <div className="rounded-2xl border border-gray-200 bg-gray-100 dark:border-gray-800 dark:bg-gray-900">
       <div className="px-5 pt-5 bg-white shadow-default rounded-2xl pb-11 dark:bg-gray-900 sm:px-6 sm:pt-6">
         <div className="flex justify-between">
           <div>
@@ -141,13 +140,17 @@ export default function ModelStatisticChart() {
           </div>
         </div>
         <div className="relative ">
-          <div className="max-h-[330px]">
-            <ReactApexChart
-              options={options}
-              series={seriesChart}
-              type="radialBar"
-              height={330}
-            />
+          <div className="max-h-[330px]"> 
+            { 
+              globalModelInfo ? (
+                <ReactApexChart
+                  options={options}
+                  series={[Number( ( (globalModelInfo.accuracy ) * 100.0 ).toFixed(2) )]}
+                  type="radialBar"
+                  height={330}
+                />
+                ) : (<></> ) 
+            }
           </div>
 
           <span className="absolute left-1/2 top-full -translate-x-1/2 -translate-y-[95%] rounded-full bg-success-50 px-3 py-1 text-xs font-medium text-success-600 dark:bg-success-500/15 dark:text-success-500">
@@ -159,7 +162,7 @@ export default function ModelStatisticChart() {
         </p>
       </div>
 
-      <div className="flex items-center justify-center gap-5 px-6 py-3.5 sm:gap-8 sm:py-5">
+      <div className="flex items-center justify-center gap-5 px-6 py-3.5 sm:gap-8 sm:py-5 ">
         
 
         <div>
@@ -178,7 +181,7 @@ export default function ModelStatisticChart() {
             F1-Score
           </p>
           <p className="flex items-center justify-center gap-1 text-base font-semibold text-gray-800 dark:text-white/90 sm:text-lg">
-            0.78
+            {globalModelInfo ? Number( ( (globalModelInfo.f1_score ) * 100.0 ).toFixed(2) ) : 0}%
           </p>
         </div>
 
@@ -189,8 +192,7 @@ export default function ModelStatisticChart() {
             Error Rate
           </p>
           <p className="flex items-center justify-center gap-1 text-base font-semibold text-gray-800 dark:text-white/90 sm:text-lg">
-            0.32
-           
+            {globalModelInfo ? Number( ( (globalModelInfo.error_rate ) * 100.0 ).toFixed(2) ) : 0}%
           </p>
         </div>
 

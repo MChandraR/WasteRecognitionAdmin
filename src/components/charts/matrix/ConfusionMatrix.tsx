@@ -15,7 +15,7 @@ const ConfusionMatrix = ({ matrixData, labels }: ConfusionMatrixProps) => {
     })) : [];
 
     return (
-        <div style={{ height: '400px' }}>
+        <div style={{ height: '450px' }}>
         
        <ResponsiveHeatMap
             data={data}
