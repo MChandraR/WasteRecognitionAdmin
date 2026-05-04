@@ -145,7 +145,7 @@ const UserPage: React.FC = () => {
        
         <div className="overflow-x-auto grid grid-cols-[40%_auto] gap-5">
           <div className="w-full mt-5 rounded-md mb-10 border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 md:p-6">
-            <Title order={3}>User Data</Title>
+            <Title order={3} className="text-white dark:text-white/90">User Data</Title>
             <div className="mt-5 grid grid-rows-1 gap-5">
 
               <TextInput
@@ -219,10 +219,10 @@ const UserPage: React.FC = () => {
           <Table highlightOnHover className="mt-2">
             <Table.Thead>
               <Table.Tr>
-                <Table.Th>Username</Table.Th>
-                <Table.Th>Email</Table.Th>
-                <Table.Th>Role</Table.Th>
-                <Table.Th>Ditugaskan</Table.Th>
+                <Table.Th className="text-gray-800 dark:text-white/90 text-lg">Username</Table.Th>
+                <Table.Th className="text-gray-800 dark:text-white/90 text-lg">Email</Table.Th>
+                <Table.Th className="text-gray-800 dark:text-white/90 text-lg">Role</Table.Th>
+                <Table.Th className="text-gray-800 dark:text-white/90 text-lg">Ditugaskan</Table.Th>
               </Table.Tr>
             </Table.Thead>
             <Table.Tbody>
@@ -235,10 +235,10 @@ const UserPage: React.FC = () => {
                       setSelectedIdx(index)
                     }}
                     bg={selectedIdx == index ? "#4db8ff33" : ""}>
-                      <Table.Td>{userData.username}</Table.Td>
-                      <Table.Td>{userData.email}</Table.Td>
-                      <Table.Td>{userData.role}</Table.Td>
-                      <Table.Td>
+                      <Table.Td className="text-gray-800 dark:text-white/90 text-lg">{userData.username}</Table.Td>
+                      <Table.Td className="text-gray-800 dark:text-white/90 text-lg">{userData.email}</Table.Td>
+                      <Table.Td className="text-gray-800 dark:text-white/90 text-lg">{userData.role}</Table.Td>
+                      <Table.Td className="text-gray-800 dark:text-white/90 text-lg">
                         {userData.is_assigned ? "Ya" : "Tidak"}
                       </Table.Td>
                       <Table.Td className="flex justify-end mr-4">

@@ -2,17 +2,29 @@
 import Checkbox from "@/components/form/input/Checkbox";
 import Input from "@/components/form/input/InputField";
 import Label from "@/components/form/Label";
-import Button from "@/components/ui/button/Button";
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "@/icons";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import AuthService from "@/service/AuthService";
+import { Modal, Title , Button } from "@mantine/core";
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const {authenticate} = useAuth();
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [title, setTitle] = useState<string>("Login Failed");
+  const [description, setDescription] = useState<string>("Email atau password yang dimasukkan tidak valid");
+
+  const close = () => setShowConfirmDialog(false);
+  const open = () => setShowConfirmDialog(true);
+
+  const handleConfirmButton = () => {
+    window.location.href = "/";
+
+    close();
+  }
 
   const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -22,9 +34,15 @@ export default function SignInForm() {
     AuthService.signIn({username: email, password}, {
         onSuccess: (data) => {
             console.log("Sign in successful:", data);
+            setTitle("Login Berhasil");
+            setDescription("Anda berhasil masuk ke dalam sistem");
+            open();
             authenticate(data.authToken);
         },
         onError: (error) => {
+            setTitle("Login Gagal");
+            setDescription("Email atau password yang dimasukkan tidak valid");
+            open();
             console.error("Sign in failed:", error);
         }
     });
@@ -32,6 +50,16 @@ export default function SignInForm() {
 
   return (
     <div className="flex flex-col flex-1 w-full align-middle">
+
+      <Modal opened={showConfirmDialog} zIndex={10} onClose={close} title={title} overlayProps={{
+              opacity : 0.3
+            }} centered >
+              <Title order={3}>{description}</Title>
+              <div className="flex justify-end gap-2 mt-5">
+                  <Button onClick={handleConfirmButton}>Ok</Button>
+              </div>
+            </Modal>
+            
       <div className="w-full max-w-md sm:pt-10 mx-auto mb-5">
         <Link
           href="/"
@@ -97,7 +125,7 @@ export default function SignInForm() {
                   </Link>
                 </div>
                 <div>
-                  <Button className="w-full" size="sm">
+                  <Button className="w-full" size="sm" type="submit">
                     Sign in
                   </Button>
                 </div>
