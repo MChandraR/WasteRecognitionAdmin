@@ -13,12 +13,17 @@ const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 export default function StatisticsChart() {
   const datePickerRef = useRef<HTMLInputElement>(null);
   const [modelEvaluationData, setModelEvaluationData] = useState<ModelEvaluation>({ accuracy : [], error_rate : [], precision : [], recall : [] , f1_score :[] , confusion_matrix: []})
-  const [selected, setSelected] = useState<number>(1);
+  const [selected, setSelected] = useState<number[]>([1]);
 
   const calculateAverageValue = (arrayData : number[]) => arrayData.reduce( (a, b) =>   a + b ,0) / arrayData.length ;
 
   useEffect(()=>{
     ModelEvaluationService.getModelEvaluationData()?.then( (data) => {
+      let averageAccList : number[] = []
+      let averageErrorRateList : number[] = []
+      let averagePrecisionList : number[] = []
+      let averageRecallList : number[] = []
+      let averageF1ScoreList : number[] = []
       const modelEvaluationData : ModelEvaluation = { accuracy : [], error_rate : [], precision : [], recall : [] , f1_score :[] , confusion_matrix: []}
       data?.forEach((modelEvaluation)=>{
 
@@ -28,6 +33,12 @@ export default function StatisticsChart() {
           const averageRecall = calculateAverageValue(modelEvaluation.recall)
           const averageF1Score = calculateAverageValue(modelEvaluation.f1_score)
 
+          averageAccList.push(averageAccurac)
+          averageErrorRateList.push(averageErrorRate)
+          averagePrecisionList.push(averagePrecission)
+          averageRecallList.push(averageRecall)
+          averageF1ScoreList.push(averageF1Score)
+
           modelEvaluationData.accuracy.push(Number(averageAccurac.toFixed(2)))
           modelEvaluationData.precision.push(Number(averagePrecission.toFixed(2)))
           modelEvaluationData.error_rate.push(Number(averageErrorRate.toFixed(2)))
@@ -36,6 +47,12 @@ export default function StatisticsChart() {
       })
       setModelEvaluationData(modelEvaluationData)
       console.log(modelEvaluationData)
+      console.log(averageAccList)
+      console.log(averageErrorRateList)
+      console.log(averagePrecisionList)
+      console.log(averageRecallList)
+      console.log(averageF1ScoreList)
+
     })
   },[]);
 
@@ -156,23 +173,23 @@ export default function StatisticsChart() {
   const series = [
     {
       name: "Akurasi",
-      data: selected === 1 || selected === 2? modelEvaluationData?.accuracy : [],
+      data: selected.includes(1) || selected.includes(2)? modelEvaluationData?.accuracy : [],
     },
     {
       name: "Error Rate",
-      data: selected === 1 || selected === 3? modelEvaluationData?.error_rate : [],
+      data: selected.includes(1) || selected.includes(3)? modelEvaluationData?.error_rate : [],
     },
     {
       name: "Precision",
-      data: selected === 1 || selected === 4? modelEvaluationData?.precision : [],
+      data: selected.includes(1) || selected.includes(4)? modelEvaluationData?.precision : [],
     },
     {
       name: "Recall",
-      data: selected === 1 || selected === 5? modelEvaluationData?.recall : [],
+      data: selected.includes(1) || selected.includes(5)? modelEvaluationData?.recall : [],
     },
     {
       name: "F1 Score",
-      data: selected === 1 || selected === 6? modelEvaluationData?.f1_score : [],
+      data: selected.includes(1) || selected.includes(6)? modelEvaluationData?.f1_score : []  ,
     },
   ];
   return (

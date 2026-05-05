@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect, ReactNode, useMemo } from "react";
-import {Table, TextInput, Title, Select, Button, Modal, Pagination, Text, Alert} from "@mantine/core"
+import {Table, TextInput, Title, Select, Button, Modal, Pagination, Text, Alert, useMantineColorScheme} from "@mantine/core"
 import UserService from "@/service/UserService";
 import UserData from "@/models/domain/UserData";
 import { MdDeleteOutline } from "react-icons/md";
@@ -15,11 +15,15 @@ interface UserDataAlert {
 }
 
 const UserPage: React.FC = () => {
+  const { colorScheme } = useMantineColorScheme();
+  const dark = colorScheme === "dark";
+  //const [isDark, setIsDark] = useState(document.documentElement.classList.contains('dark'));
   const [tableRow, setTableRow] = useState<ReactNode>()
   const [userDatas, setUserData] = useState<UserData[]>([])
   const [searchKey, setSearchKey] = useState<String>("")
   const [selectedIdx, setSelectedIdx] = useState<number>(0);
   const [currentUserData, setCurrentUserData] = useState<UserData>({id:"",username:"", password : "", email : "", role : "user", is_assigned : false})
+  const [oldUserData, setOldUserData] = useState<UserData>({id:"",username:"", password : "", email : "", role : "user", is_assigned : false})
   const [showConfirmDialog, { open, close }] = useDisclosure(false);
   const [currentPageIndex , setCurrentPageIndex] = useState<number>(1);
   const numOfDataperPage = 10;
@@ -109,11 +113,11 @@ const UserPage: React.FC = () => {
     
       UserService.updateUserData({
         id : currentUserData.id,
-        username : currentUserData.username,
+        username : currentUserData.username ==  oldUserData.username ? "" : currentUserData.username,
         password : currentUserData.password ?? "",
-        email : currentUserData.email,
-        role : currentUserData.role,
-        is_assigned : currentUserData.is_assigned
+        email : currentUserData.email == oldUserData.email ? "" : currentUserData.email,
+        role : currentUserData.role == oldUserData.role ? "" : currentUserData.role,
+        is_assigned : currentUserData.is_assigned 
       }).then((response)=>{
         if(response.status == 200){
           fetchUserData();
@@ -144,8 +148,8 @@ const UserPage: React.FC = () => {
       <div className="flex flex-col gap-4"> {/* Container utama dengan jarak antar elemen */}
        
         <div className="overflow-x-auto grid grid-cols-[40%_auto] gap-5">
-          <div className="w-full mt-5 rounded-md mb-10 border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 md:p-6">
-            <Title order={3} className="text-white dark:text-white/90">User Data</Title>
+          <div className="w-full mt-5 rounded-md mb-10 border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/0 md:p-6">
+            <Title order={3} className="text-black/90 dark:text-white/90">User Data</Title>
             <div className="mt-5 grid grid-rows-1 gap-5">
 
               <TextInput
@@ -154,6 +158,11 @@ const UserPage: React.FC = () => {
                 value={String(currentUserData?.username)}
                 onChange={(event) => setCurrentUserData({...currentUserData, username : event.currentTarget.value })}
                 placeholder="Masukkan username pengguna   "
+                style={{
+                  input : {
+                    backgroundColor : "red" 
+                  }
+                }}
               />
               <TextInput
                 error={(showInputDataAlert && currentUserData?.password == "") ? "Password harus diisi !" :""}
@@ -232,6 +241,7 @@ const UserPage: React.FC = () => {
                     <Table.Tr key={userData.id} 
                     onClick={(event)=>{
                       setCurrentUserData(userDatas[index])
+                      setOldUserData(userDatas[index])
                       setSelectedIdx(index)
                     }}
                     bg={selectedIdx == index ? "#4db8ff33" : ""}>
