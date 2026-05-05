@@ -13,11 +13,12 @@ const ReactApexChart = dynamic(() => import("react-apexcharts"), {
 
 interface LineChartOneProps{
   data : SeriesType[]
+  height? : number | undefined 
 }
 
 
 const LineChartOne: React.FC<LineChartOneProps> = ({
-  data
+  data, height 
 })=>{
   const options: ApexOptions = {
     legend: {
@@ -31,14 +32,14 @@ const LineChartOne: React.FC<LineChartOneProps> = ({
         enabled : data.length > 0 ? data[0].data.length < 200 : false
       },
       fontFamily: "Outfit, sans-serif",
-      height: 310,
+      height: height ? height : 310,
       type: "line", // Set the chart type to 'line'
       toolbar: {
         show: false, // Hide chart toolbar
       },
     },
     stroke: {
-      curve: "straight", // Define the line style (straight, smooth, or step)
+      curve: "smooth", // Define the line style (straight, smooth, or step)
       width: [2, 2], // Line width for each dataset
     },
     fill: {
@@ -109,13 +110,13 @@ const LineChartOne: React.FC<LineChartOneProps> = ({
   };
 
   return (
-    <div className="max-w-full  overflow-x-auto custom-scrollbar">
+    <div className="max-w-full  overflow-x-hidden custom-scrollbar">
       <div id="chartEight" className="max-w-full">
         <ReactApexChart
           options={options}
           series={data}
           type="area"
-          height={310}
+          height={height ? height : 310}
         />
       </div>
     </div>

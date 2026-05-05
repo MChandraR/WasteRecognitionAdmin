@@ -6,6 +6,7 @@ export interface TrainingSessionResponse{
     label_count : number[];
     last_loss : number;
     loss : number[];
-    created_at : string;
+    created_at : number;
+    model_version : string,
     status : string;
 }

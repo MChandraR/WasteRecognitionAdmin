@@ -6,11 +6,35 @@ import UserService from "@/service/UserService";
 import TrainingSessionService from "@/service/TrainingSessionService";
 import TotalTrainingCount from "@/models/domain/TotalTrainingCount";
 import { UserStatisticResponse } from "@/models/APIResponse/UserStatisticResponse";
+import { useMantineColorScheme } from "@mantine/core";
 
 
 export const EcommerceMetrics = () => {
   const [userCount, setUsercount] = useState("0");
   const [totalTrainingSessionCount, setTotalTrainingSessionCount] = useState<TotalTrainingCount>()
+  const { setColorScheme } = useMantineColorScheme();
+  
+  useEffect(() => {
+    // Fungsi untuk mengecek tema dari Tailwind/LocalStorage
+    const syncTheme = () => {
+      const savedTheme = localStorage.getItem('theme'); // Sesuaikan key localStorage admin kamu
+      const isDark = document.documentElement.classList.contains('dark') || savedTheme === 'dark';
+      
+      setColorScheme(isDark ? 'dark' : 'light');
+    };
+
+    // 1. Jalankan saat pertama kali load
+    syncTheme();
+
+    // 2. Pantau perubahan class pada <html> (jika admin pakai class mutation)
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
+    return () => observer.disconnect();
+  }, [setColorScheme]);
 
   useEffect(() => {
     UserService.getUserStatistics("",{

@@ -88,7 +88,7 @@ export default function ModelEvaluationPage() {
                         <Title order={5} className="pt-4 pl-2 font-normal text-gray-800 dark:text-white/90"> *semakin {value === 'accuracy' || value === 'precision' || value === 'recall' || value === 'f1_score' ? 'tinggi' : 'rendah'} lebih baik</Title>
 
 
-                        <div className="max-w-full overflow-x-auto custom-scrollbar">
+                        <div className="max-w-full overflow-x-hidden custom-scrollbar">
                             <div className="-ml-5 min-w-[650px] xl:min-w-full pl-2 pt-10">
                             <ReactApexChart
                                 options={options}

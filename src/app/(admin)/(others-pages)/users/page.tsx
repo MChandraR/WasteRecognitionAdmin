@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   // other metadata
 };
 export default function page() {
+  
   return (
     <div>
       <PageBreadcrumb pageTitle="user" />

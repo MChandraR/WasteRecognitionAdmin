@@ -11,19 +11,21 @@ const ReactApexChart = dynamic(() => import("react-apexcharts"), {
 
 export interface BarChartOneProps{
   data : number[],
-  x_label : string[]
+  x_label : string[],
+  height? : number | undefined
 }
 
  const  BarChartOne : React.FC<BarChartOneProps> = ({
   data,
-  x_label
+  x_label,
+  height = 310
 })=> {
   const options: ApexOptions = {
     colors: ["#465fff"],
     chart: {
       fontFamily: "Outfit, sans-serif",
       type: "bar",
-      height: 180,
+      height: height,
       toolbar: {
         show: false,
       },
@@ -86,7 +88,7 @@ export interface BarChartOneProps{
   };
 
   return (
-    <div className="max-w-full overflow-x-auto custom-scrollbar">
+    <div className="max-w-full overflow-x-hidden custom-scrollbar">
       <div id="chartOne" className="max-w-full  ">
         <ReactApexChart
           options={options}
@@ -95,7 +97,7 @@ export interface BarChartOneProps{
             data : data
           }]}
           type="bar"
-          height={180}
+          height={height}
         />
       </div>
     </div>

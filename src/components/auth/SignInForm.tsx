@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import AuthService from "@/service/AuthService";
 import { Modal, Title , Button } from "@mantine/core";
+import { setCookies } from "@/util/CookiesUtil";
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -34,6 +35,7 @@ export default function SignInForm() {
     AuthService.signIn({username: email, password}, {
         onSuccess: (data) => {
             console.log("Sign in successful:", data);
+            setCookies("username", email);
             setTitle("Login Berhasil");
             setDescription("Anda berhasil masuk ke dalam sistem");
             open();

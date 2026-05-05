@@ -57,16 +57,16 @@ const navItems: NavItem[] = [
     name: "Model Evaluation",
     path: "/evaluation",
   },
-  {
-    icon: <UserCircleIcon />,
-    name: "User Profile",
-    path: "/profile",
-  },
-  {
-    name: "Forms",
-    icon: <ListIcon />,
-    path : "/forms",
-  }
+  // {
+  //   icon: <UserCircleIcon />,
+  //   name: "User Profile",
+  //   path: "/profile",
+  // },
+  // {
+  //   name: "Forms",
+  //   icon: <ListIcon />,
+  //   path : "/forms",
+  // }
 ];
 
 const othersItems: NavItem[] = [
@@ -91,12 +91,13 @@ const othersItems: NavItem[] = [
   //   ],
   // },
   {
-    icon: <PlugInIcon />,
-    name: "Authentication",
-    subItems: [
-      { name: "Sign In", path: "/signin", pro: false },
-      { name: "Sign Up", path: "/signup", pro: false },
-    ],
+    icon: <UserCircleIcon />,
+    name: "Sign In",
+    path : "/signin"
+    // subItems: [
+    //   { name: "Sign In", path: "/signin", pro: false },
+    //   { name: "Sign Up", path: "/signup", pro: false },
+    // ],
   },
 ];
 
