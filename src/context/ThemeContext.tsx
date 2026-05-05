@@ -30,6 +30,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     if (isInitialized) {
       localStorage.setItem("theme", theme);
+      document.cookie = `mantine-color-scheme=${theme}; path=/; max-age=31536000`;
       if (theme === "dark") {
         document.documentElement.classList.add("dark");
       } else {

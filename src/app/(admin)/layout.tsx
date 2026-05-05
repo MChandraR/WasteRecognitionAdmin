@@ -24,7 +24,7 @@ export default function AdminLayout({
   return (
     <div className="min-h-screen xl:flex  bg-white dark:bg-gray-900">
       {/* Sidebar and Backdrop */}
-      <AppSidebar />
+      <AppSidebar />  
       <Backdrop />
       {/* Main Content Area */}
       <div
@@ -33,7 +33,7 @@ export default function AdminLayout({
         {/* Header */}
         <AppHeader />
         {/* Page Content */}
-        <div className="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6 bg-white  dark:bg-white/3 ">{children}</div>
+        <div className="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6 bg-white  dark:bg-white/0 ">{children}</div>
       </div>
     </div>
   );

@@ -15,9 +15,6 @@ interface UserDataAlert {
 }
 
 const UserPage: React.FC = () => {
-  const { colorScheme } = useMantineColorScheme();
-  const dark = colorScheme === "dark";
-  //const [isDark, setIsDark] = useState(document.documentElement.classList.contains('dark'));
   const [tableRow, setTableRow] = useState<ReactNode>()
   const [userDatas, setUserData] = useState<UserData[]>([])
   const [searchKey, setSearchKey] = useState<String>("")
@@ -30,6 +27,30 @@ const UserPage: React.FC = () => {
   const [showInputDataAlert, setShowInputDataAlert] = useState<boolean>(false);
   const [inputAlertContent, setInputAlertContent] = useState<UserDataAlert>({title:"Title", message:"message", color : "blue"})
  
+  const { setColorScheme } = useMantineColorScheme();
+
+  useEffect(() => {
+    // Fungsi untuk mengecek tema dari Tailwind/LocalStorage
+    const syncTheme = () => {
+      const savedTheme = localStorage.getItem('theme'); // Sesuaikan key localStorage admin kamu
+      const isDark = document.documentElement.classList.contains('dark') || savedTheme === 'dark';
+      
+      setColorScheme(isDark ? 'dark' : 'light');
+    };
+
+    // 1. Jalankan saat pertama kali load
+    syncTheme();
+
+    // 2. Pantau perubahan class pada <html> (jika admin pakai class mutation)
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
+    return () => observer.disconnect();
+  }, [setColorScheme]);
+
   useEffect(()=>{
     fetchUserData();
   },[]);
@@ -132,7 +153,7 @@ const UserPage: React.FC = () => {
   }
 
   return (
-    <>
+    <div className="w-full " >
       <Modal opened={showConfirmDialog} zIndex={10} onClose={close} title="Delete User ?" overlayProps={{
         opacity : 0.3
       }} centered >
@@ -145,8 +166,8 @@ const UserPage: React.FC = () => {
 
      
 
-      <div className="flex flex-col gap-4"> {/* Container utama dengan jarak antar elemen */}
-       
+      <div className="flex flex-col gap-4 "> {/* Container utama dengan jarak antar elemen */}
+  
         <div className="overflow-x-auto grid grid-cols-[40%_auto] gap-5">
           <div className="w-full mt-5 rounded-md mb-10 border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/0 md:p-6">
             <Title order={3} className="text-black/90 dark:text-white/90">User Data</Title>
@@ -154,19 +175,25 @@ const UserPage: React.FC = () => {
 
               <TextInput
                 error={(showInputDataAlert && currentUserData?.username == "") ? "Username harus diisi !" :""}
-                className="w-full"
+                className="w-full text-white"  
+                styles={{
+                  input: {
+                    backgroundColor: 'var(--color-custom-bg-light) ',
+                  }
+                }}
                 value={String(currentUserData?.username)}
                 onChange={(event) => setCurrentUserData({...currentUserData, username : event.currentTarget.value })}
                 placeholder="Masukkan username pengguna   "
-                style={{
-                  input : {
-                    backgroundColor : "red" 
-                  }
-                }}
               />
               <TextInput
                 error={(showInputDataAlert && currentUserData?.password == "") ? "Password harus diisi !" :""}
                 className="w-full"
+                styles={{
+                  input: {
+                    backgroundColor: 'var(--color-custom-bg-light) dark:var(--color-custom-bg-dark)',
+                    color: 'var(--color-custom-text-light) dark:var(--color-custom-text-dark)',
+                  },
+                }}
                 value={String(currentUserData?.password ?? "")}
                 onChange={(event) => setCurrentUserData({...currentUserData, password : event.currentTarget.value ?? ""})}
                 placeholder="Masukkan password"
@@ -174,6 +201,11 @@ const UserPage: React.FC = () => {
               <TextInput
                 error={(showInputDataAlert && currentUserData?.email == "") ? "Email harus diisi !" :""}
                 className="w-full"
+                styles={{
+                  input: {
+                    backgroundColor: 'var(--color-custom-bg-light) dark:var(--color-custom-bg-dark)',
+                  },
+                   }}
                 value={String(currentUserData?.email)}
                 onChange={(event) => setCurrentUserData({...currentUserData, email : event.currentTarget.value })}
                 placeholder="Masukkan email pengguna"
@@ -183,6 +215,11 @@ const UserPage: React.FC = () => {
                 onChange={(event)=>setCurrentUserData({...currentUserData, role : event ?? "user"})}
                 placeholder="Pick value"
                 data={['user', 'admin']}
+                styles={{
+                  input: {
+                    backgroundColor: 'var(--color-custom-bg-light) dark:var(--color-custom-bg-dark)',
+                  },
+                }}
               />
               <Select
                 className="w-full"
@@ -198,10 +235,18 @@ const UserPage: React.FC = () => {
                     });
                   }
                 }}
+                styles={{
+                  input: {
+                    textColor: 'var(--color-custom-text-light) dark:var(--color-custom-text-dark)',
+                    backgroundColor: 'var(--color-custom-bg-light) dark:var(--color-custom-bg-dark)',
+                  },
+                }}
                 data={[
                     { value: 'true', label: 'Ditugaskan' },
                     { value: 'false', label: 'Tidak Ditugaskan' }
                   ]}
+                classNames={{ input: 'bg-white dark:bg-slate-700' }}
+
               />
               <Alert variant="light" withCloseButton onClose={()=>{setShowInputDataAlert(false)}} color={inputAlertContent.color} title={inputAlertContent.title} hidden={!showInputDataAlert}>
                 {inputAlertContent.message}
@@ -220,6 +265,7 @@ const UserPage: React.FC = () => {
             <Title order={5}>Search : </Title>
             <TextInput
               className="w-full sm:w-1/2 lg:w-1/3"
+              classNames={{ input: 'bg-white dark:bg-slate-700' }}
               value={String(searchKey)}
               onChange={(event) => setSearchKey(event.currentTarget.value)}
               placeholder="Masukkan kata kunci pencarian"
@@ -275,7 +321,7 @@ const UserPage: React.FC = () => {
         </div>
         </div>
       </div>
-    </>
+    </div>
   );
   
 };
