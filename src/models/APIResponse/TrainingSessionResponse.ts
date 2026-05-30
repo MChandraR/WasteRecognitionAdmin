@@ -4,9 +4,13 @@ export interface TrainingSessionResponse{
     weight_id : string;
     num_data : number;
     label_count : number[];
-    last_loss : number;
-    loss : number[];
+    init_loss : number;
+    training_loss : number[];
+    final_loss : number;
     created_at : number;
     model_version : string,
+    init_accuracy : number;
+    training_accuracy : number[];
+    final_accuracy : number;
     status : string;
 }

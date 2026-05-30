@@ -8,6 +8,8 @@ import { SeriesType } from "@/components/charts/interface/SeriesType";
 import { TableBody } from "@/components/ui/table";
 import UserService from "@/service/UserService";
 import { UserStatisticResponse } from "@/models/APIResponse/UserStatisticResponse";
+import NotFound from "@/app/not-found";
+import NoData from "./no-data";
 
 export default function AveraginPage(){
     const [trainingData, setTrainingData] = useState<TrainingModel[]>([]);
@@ -34,36 +36,36 @@ export default function AveraginPage(){
 
     return (
         <div className="">
-            <div className="w-full mt-5 flex rounded-2xl mb-1 border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 md:p-6 gap-5 justify-between items-center">
+            <div className="w-full mt-5 flex rounded-2xl mb-1 border text-gray-800 dark:text-white/90 border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 md:p-6 gap-5 justify-between items-center">
                   <div className="">
-                    <Title order={3}>Current Training</Title>
-                    <Text>{trainingData.length}/{userStatistic?.total_users ?? 0} Anda sudah bisa melakukan agregasi model </Text>
+                    <Title order={3} className="text-gray-800 dark:text-white/90">Current Training</Title>
+                    <Text className="text-gray-800 dark:text-white/90">{trainingData.length}/{userStatistic?.total_users ?? 0} Anda sudah bisa melakukan agregasi model </Text>
                 </div>
                 <Button disabled={trainingData.length!=userStatistic?.total_users   }>Averaging</Button>
             </div>
 
             <div className="grid grid-cols-2 gap-10">
                 <div className="w-full mt-5  rounded-2xl mb-10 border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 md:p-6 gap-5 justify-between items-center">
-                    <Title order={3}>Statistik Training Client</Title>
+                    <Title order={3} className="text-gray-800 dark:text-white/90">Statistik Training Client</Title>
                     
                     {
                         trainingData[0] ? ( <LineChartOne data={[{
                             series : "str",
-                            data : trainingData[0].loss
-                        }]}></LineChartOne> )   : (<></>)
+                            data : trainingData[0].training_loss
+                        }]}></LineChartOne> )   : NoData()
                     }
                     
                 </div>
                 <div className="w-full mt-5  rounded-2xl mb-10 border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 md:p-6 gap-5 justify-between items-center">
-                    <Title order={3} className="pb-3">Daftar Training User</Title>
+                    <Title order={3} className="pb-3 text-gray-800 dark:text-white/90">Daftar Training User</Title>
                     <Table>
                         <TableThead>
                             <TableTr>
-                                <TableTd>No</TableTd>
-                                <TableTd>Name</TableTd>
-                                <TableTd>No</TableTd>
-                                <TableTd>No</TableTd>
-                                <TableTd>Waktu Pelatihan</TableTd>
+                                <TableTd className="text-gray-800 dark:text-white/90">No</TableTd>
+                                <TableTd className="text-gray-800 dark:text-white/90">Name</TableTd>
+                                <TableTd className="text-gray-800 dark:text-white/90">No</TableTd >
+                                <TableTd className="text-gray-800 dark:text-white/90">No</TableTd>
+                                <TableTd className="text-gray-800 dark:text-white/90">Waktu Pelatihan</TableTd>
                             </TableTr>
                         </TableThead>
                         <TableBody>

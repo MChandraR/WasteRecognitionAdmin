@@ -91,7 +91,7 @@ const othersItems: NavItem[] = [
   //   ],
   // },
   {
-    icon: <UserCircleIcon />,
+    icon: <UserCircleIcon  />,
     name: "Sign In",
     path : "/signin"
     // subItems: [
