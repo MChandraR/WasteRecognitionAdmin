@@ -261,7 +261,7 @@ const UserPage: React.FC = () => {
           </div>
         </div>
         <div>
-          <div className="flex justify-end items-center w-full gap-3 mb-5 mt-3"> 
+          <div className="flex justify-end items-center w-full gap-3 mb-5 mt-3 overflow-hidden"> 
             <Title order={5}>Search : </Title>
             <TextInput
               className="w-full sm:w-1/2 lg:w-1/3"
@@ -315,7 +315,7 @@ const UserPage: React.FC = () => {
             <div> 
               <Text>Total Data : {userDatas.length}</Text>
             </div>
-            <Pagination value={currentPageIndex} onChange={(index) => setCurrentPageIndex(index)} total={userDatas.length/numOfDataperPage} color="indigo" />
+            <Pagination value={currentPageIndex} onChange={(index) => setCurrentPageIndex(index)} total={Math.ceil(userDatas.length/numOfDataperPage)} color="indigo" />
           </div>
 
         </div>
